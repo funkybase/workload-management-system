@@ -1,4 +1,4 @@
-from app import db
+from backend import db
 from sqlalchemy import inspect
 
 pattern_activity = db.Table('pattern_activity',

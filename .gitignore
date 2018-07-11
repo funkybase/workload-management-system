@@ -24,4 +24,4 @@ htmlcov/
 
 venv/
 __pycache__/
-app/__pycache__.py/
+backend/__pycache__.py/

@@ -1,4 +1,4 @@
-from app import app, triggers, db
+from backend import app, triggers, db
 from flask import jsonify
 import pandas as pd, json
 from app.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
