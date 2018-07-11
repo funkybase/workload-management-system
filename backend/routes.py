@@ -1,7 +1,7 @@
 from backend import app, triggers, db
 from flask import jsonify
 import pandas as pd, json
-from app.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
+from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 
 @app.route('/')
 @app.route('/index')
