@@ -21,13 +21,15 @@ def stafftotals(): #5 second read time, try to automap sqlalchemy
 def offerings(): #5 second read time, try to automap sqlalchemy
     df = pd.read_sql('offering_full', db.engine) 
     #change this to return a response object 
-    return df.to_json(orient='records')
+    resp = Response(df.to_json(orient='records'), mimetype='application/json')
+    return resp
 
 @app.route('/api/pattern', methods=['GET']) #GET
 def patterns(): #5 second read time, try to automap sqlalchemy
     df = pd.read_sql('pattern_full', db.engine)
     #change this to return a response object 
-    return df.to_json(orient='records')
+    resp = Response(df.to_json(orient='records'), mimetype='application/json')
+    return resp
 
 @app.route('/api/activitylookup/<int:pattern_id>', methods=['GET']) #GET
 def pattern_lookup(pattern_id):
@@ -91,7 +93,8 @@ def offering_lookup(staff_id):
 
 @app.route('/api/costing', methods=['GET'])
 def costing():
-    return Trigger.costing()
+    resp = Response(Trigger.costing(), mimetype='application/json')
+    return resp
 
 #WRITES
 @app.route('/api/staff/<int:staff_id>', methods=['POST']) #POST
