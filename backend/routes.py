@@ -1,7 +1,8 @@
-from backend import app, triggers, db
+from backend import app, db
 from flask import jsonify
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
+from backend.triggers import Trigger
 
 @app.route('/')
 @app.route('/index')
@@ -89,7 +90,7 @@ def offering_lookup(staff_id):
 
 @app.route('/api/costing', methods=['GET'])
 def costing():
-    return 0
+    return tg.costing()
 
 #WRITES
 @app.route('/api/staff/<int:staff_id>', methods=['POST']) #POST

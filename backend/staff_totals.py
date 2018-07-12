@@ -1,7 +1,7 @@
 from app import db
 from app.models import Pattern, Activity, Location, Period, Unit, Staff, Offering
 import pandas as pd
-import datetime
+#import datetime
 
 
 df1 = pd.read_sql('staff', db.engine)
