@@ -24,7 +24,7 @@ class Trigger:
         df1 = df1.assign(hours_to_staff = df1.coordination + df1.tutorial_to_staff * df1.tutorial)
         df1 = df1.assign(hours_to_casual = df1.tutorial_to_casual * df1.tutorial)
         df1 = df1.assign(tally = (df1.group_required - df1.tutorial_to_staff - df1.tutorial_to_casual) == 0)
-        df1 = df1.assign(casual_hours_billable = df1.tutorial_to_casual * df1.hours_per_period)
+        df1 = df1.assign(casual_hours_billable = df1.tutorial_to_casual * df1.hour_per_period)
         df1 = df1.reset_index(drop=True)
         df1.to_sql('offering_full', db.engine, if_exists='replace')
 
