@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import jsonify
+from flask import jsonify, Response
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
@@ -14,7 +14,8 @@ def index():
 def stafftotals(): #5 second read time, try to automap sqlalchemy
     df = pd.read_sql('staff_totals', db.engine)
     #change this to return a response object 
-    return df.to_json(orient='records')
+    resp = Response(df.to_json(orient='records'), mimetype='application/json')
+    return resp 
 
 @app.route('/api/offering', methods=['GET']) #GET
 def offerings(): #5 second read time, try to automap sqlalchemy
