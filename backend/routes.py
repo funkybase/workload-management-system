@@ -146,11 +146,11 @@ def edit_offering(offering_id):
         if "enrolment" in content:
             offering.enrolment = content["enrolment"]
         if "tutorial_to_staff" in content:
-            content.tutorial_to_staff = content["content_to_staff"]
+            offering.tutorial_to_staff = content["content_to_staff"]
         if "tutorial_to_casual" in content:
-            content.tutorial_to_casual = content["tutorial_to_casual"]
+            offering.tutorial_to_casual = content["tutorial_to_casual"]
         if "staff_id" in content:
-            content.UC = Staff.query.get(content["staff_id"])
+            offering.UC = Staff.query.get(content["staff_id"])
         db.session.commit()
         Trigger.offering()
         Trigger.totals()
