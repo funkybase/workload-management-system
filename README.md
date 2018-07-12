@@ -3,7 +3,7 @@
 
 #### Local instance
 
-To access workload API locally, either:
+To access workload API locally, either:  
     1. export FLASK_APP and run with `flask run`
     2. run with `python backend.py` (python must be version 3)
     3. run with `gunicorn wsgi`
@@ -36,16 +36,16 @@ To view offerings of a certain staff, append `/offeringlookup/{staff_id}`. (staf
 
 To view total costs and total casual hours, append `/casual`.
 
-To edit staff, append `staff/{staff_id}` and post the json in the format:
+To edit staff, append `staff/{staff_id}` and post the json in the format:  
 `{xxx}`
 
-To edit offering, append `offering/{offering_id}` and post the json in the format:
+To edit offering, append `offering/{offering_id}` and post the json in the format:  
 `{xxx}`
 
-To add new offering, append `/new/offering` and post the json in the format: 
+To add new offering, append `/new/offering` and post the json in the format:  
 `{xxx}`
 
-To add new pattern, append `/new/pattern` and post the json in the format: 
+To add new pattern, append `/new/pattern` and post the json in the format:  
 `{xxx}`
 
 The last two methods do not allow bulk inserts.
