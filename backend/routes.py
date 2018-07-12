@@ -161,11 +161,14 @@ def edit_offering(offering_id):
 def new_offering():
     if request.data and bool(request.json):
         content = request.json
-        if "unit_id" and "period_id" and "pattern_id" in content:
+        if ("unit_id" and "period_id" and "pattern_id") in content:
             offering = Offering()
-            offering.unit = Unit.query.get(content["unit_id"])
-            offering.period = Period.query.get(content["period_id"])
-            offering.pattern = Pattern.query.get(content["pattern_id"])
+            with db.session.no_autoflush:
+                offering.unit = Unit.query.get(content["unit_id"])
+                period = Period.query.get(content["period_id"])
+                pattern = Pattern.query.get(content["pattern_id"])
+                offering.period = period
+                offering.pattern = pattern
             if "confirm" in content:
                 offering.confirm = content["confirm"]
             if "enrolment" in content:
@@ -185,10 +188,14 @@ def new_offering():
 def new_pattern():
     if request.data and bool(request.json):
         content = request.json
-        if "code" and "location_id" and "activities" and "mode" in content:
+        if ("code" and "location_id" and "activities" and "mode") in content:
             location = Location.query.get(content["location_id"])
             pattern = Pattern(code=content["code"], mode=content["mode"])
             pattern.location = location
+            activities = content["activities"]
+            for activity in activities:
+                act = Activity.query.get(activity["activity_id"])
+                pattern.pattern_activity.append(act)
             if "description" in content:
                 pattern.description = content["description"]
             if "long_description" in content:
@@ -197,10 +204,6 @@ def new_pattern():
                 pattern.student_per_group = content["student_per_group"]
             if "hour_per_tutorial" in content:
                 pattern.hour_per_tutorial = content["hour_per_tutorial"]
-            activities = content["activities"]
-            for activity in activities:
-                act = Activity.query.get(activity["activity_id"])
-                pattern.pattern_activity.append(act)
             db.session.commit()
             Trigger.pattern()
             return '', 200
