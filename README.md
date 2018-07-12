@@ -4,9 +4,9 @@
 #### Local instance
 
 To access workload API locally, clone this repo and run `pip install -r requirements.txt` once in the directory and either:  
-    1. export FLASK_APP and run with `flask run`  
-    2. run with `python backend.py` (python must be version 3)  
-    3. run with `gunicorn wsgi`  
+    1. export FLASK_APP and run with `flask run` and go to localhost:5000  
+    2. run with `python backend.py` (python must be version 3) and go to localhost:5000  
+    3. run with `gunicorn wsgi` and go to localhost:8000  
 
 ---
 
