@@ -34,13 +34,30 @@ To view periods of a certain location, append `/periodlookup/{location_id}`. (lo
 
 To view offerings of a certain staff, append `/offeringlookup/{staff_id}`. (staff_id is a unique key integer)
 
-To view total costs and total casual hours, append `/casual`.
+To view total costs and total casual hours, append `/costing`.
 
 To edit staff, append `staff/{staff_id}` and post the json in the format:  
-`{xxx}`
+```
+{"fraction":<some float max 1>,  
+	"supervision":<some float>,  
+	 "research":<some float>,  
+	 "service":<some float>,  
+	 "extra":<some float>,  
+	 "service_description":<some text max 128 char>,  
+	 "comments":<some text max 128 char>   
+}
+```
 
 To edit offering, append `offering/{offering_id}` and post the json in the format:  
-`{xxx}`
+```
+{"confirm":<some boolean>,  
+	"enrolment":<some integer>,  
+	"tutorial_to_staff":<some integer>,  
+	"tutorial_to_casual":<some integer>,  
+	"staff_id":<some integer>
+}
+```
+
 
 To add new offering, append `/new/offering` and post the json in the format:  
 `{xxx}`
