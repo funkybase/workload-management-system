@@ -165,8 +165,8 @@ def new_offering():
             offering = Offering()
             with db.session.no_autoflush:
                 offering.unit = Unit.query.get(content["unit_id"])
-                period = Period.query.get(content["period_id"])
                 pattern = Pattern.query.get(content["pattern_id"])
+                period = Period.query.get(content["period_id"])
                 offering.period = period
                 offering.pattern = pattern
             if "confirm" in content:

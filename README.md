@@ -60,10 +60,37 @@ To edit offering, append `offering/{offering_id}` and post the json in the forma
 
 
 To add new offering, append `/new/offering` and post the json in the format:  
-`{xxx}`
+```  
+//mandatory fields  
+{"unit_id":<some int>,  
+	"pattern_id":<some int>,  
+	"period_id":<some int>   
+//optional fields (these fields have either have default values or nullable)  
+	"confirm":<some boolean default false>,  
+	"enrolment":<some int default 0>,  
+	"tutorial_to_staff":<some int default 0>,  
+	"tutorial_to_casual":<some int default 0>  
+}  
+```
 
 To add new pattern, append `/new/pattern` and post the json in the format:  
-`{xxx}`
+```  
+//mandatory fields  
+{"code":<some unique string max 8 char>,  
+	"location_id":<some int>,  
+	"mode":<some char 'D' or 'X'>,  
+	"activities: [{  
+		"activity_id":<some int>  
+	}. {  
+		"activity_id":<some int>  
+	}]  
+//optional fields (close the json before this comment if the fields below are not needed)  
+	"description": <some string max 64 char no default>,  
+	"long_description": <some string max 256 char no default>,  
+	"student_per_group": <some int default 0>,  
+	"hour_per_tutorial": <some int default 0>  
+}
+```
 
-The last two methods do not allow bulk inserts.
+The last four methods do not allow bulk inserts.
 
