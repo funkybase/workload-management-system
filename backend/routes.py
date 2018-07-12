@@ -133,7 +133,7 @@ def edit_staff(staff_id):
             staff.comments = content["comments"]
         db.session.commit()
         Trigger.totals()
-        return '', 201
+        return '', 200
     return abort(404)
 
 @app.route('/api/offering/<int:offering_id>', methods=['POST']) #POST
@@ -154,13 +154,54 @@ def edit_offering(offering_id):
         db.session.commit()
         Trigger.offering()
         Trigger.totals()
-        return '', 201
+        return '', 200
     return abort(404)
 
 @app.route('/api/new/offering', methods=['POST']) #POST
 def new_offering():
-    return 0
+    if request.data and bool(request.json):
+        content = request.json
+        if "unit_id" and "period_id" and "pattern_id" in content:
+            offering = Offering()
+            offering.unit = Unit.query.get(content["unit_id"])
+            offering.period = Period.query.get(content["period_id"])
+            offering.pattern = Pattern.query.get(content["pattern_id"])
+            if "confirm" in content:
+                offering.confirm = content["confirm"]
+            if "enrolment" in content:
+                offering.enrolment = content["enrolment"]
+            if "tutorial_to_staff" in content:
+                offering.tutorial_to_staff = content["tutorial_to_staff"]
+            if "tutorial_to_casual" in content:
+                offering.tutorial_to_casual = content["tutorial_to_casual"]
+            db.session.commit()
+            Trigger.offering()
+            Trigger.totals()
+            return '', 200
+    return abort(404)
 
+            
 @app.route('/api/new/pattern', methods=['POST']) #POST
 def new_pattern():
-    return 0;
+    if request.data and bool(request.json):
+        content = request.json
+        if "code" and "location_id" and "activities" and "mode" in content:
+            location = Location.query.get(content["location_id"])
+            pattern = Pattern(code=content["code"], mode=content["mode"])
+            pattern.location = location
+            if "description" in content:
+                pattern.description = content["description"]
+            if "long_description" in content:
+                pattern.long_description = content["long_description"]
+            if "student_per_group" in content:
+                pattern.student_per_group = content["student_per_group"]
+            if "hour_per_tutorial" in content:
+                pattern.hour_per_tutorial = content["hour_per_tutorial"]
+            activities = content["activities"]
+            for activity in activities:
+                act = Activity.query.get(activity["activity_id"])
+                pattern.pattern_activity.append(act)
+            db.session.commit()
+            Trigger.pattern()
+            return '', 200
+    return abort(404)

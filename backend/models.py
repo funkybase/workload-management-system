@@ -16,7 +16,7 @@ location_period = db.Table('location_period',
 
 class Pattern(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(8), nullable=False, index=True)
+    code = db.Column(db.String(8), nullable=False, index=True, unique=True)
     description = db.Column(db.String(64))
     long_description = db.Column(db.String(256))
     student_per_group = db.Column(db.Integer, nullable=False, default=15)
