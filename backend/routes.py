@@ -1,12 +1,12 @@
-from backend import app, triggers, db
+from app import app, triggers, db
 from flask import jsonify
 import pandas as pd, json
-from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
+from app.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
+    return "Hello, World! Visit github.com/funkybase/workload for instructions to use API"
 
 #READS
 @app.route('/api/stafftotals', methods=['GET']) #GET
@@ -67,6 +67,22 @@ def locations():
         locationArr.append(location.toDict())
     return jsonify(locationArr)
 
+@app.route('/api/activity', methods=['GET'])
+def activities():
+    activities = Activity.query.all()
+    activityArr = []
+    for activity in activities:
+        activityArr.append(activity.toDict())
+    return jsonify(activityArr)
+
+@app.route('/api/offeringlookup/<staff_id>', methods=['GET'])
+def offering_lookup(staff_id):
+    return 0
+
+@app.route('/api/costing', methods=['GET'])
+def costing():
+    return 0
+
 #WRITES
 @app.route('/api/staff/<int:staff_id>', methods=['POST']) #POST
 def edit_staff(staff_id):
@@ -82,4 +98,4 @@ def new_offering():
 
 @app.route('/api/new/pattern', methods=['POST']) #POST
 def new_pattern():
-    return 0
+    return 0;
