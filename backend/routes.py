@@ -82,4 +82,4 @@ def new_offering():
 
 @app.route('/api/new/pattern', methods=['POST']) #POST
 def new_pattern():
-    return 0;
+    return 0
