@@ -90,7 +90,7 @@ def offering_lookup(staff_id):
 
 @app.route('/api/costing', methods=['GET'])
 def costing():
-    return tg.costing()
+    return Trigger.costing()
 
 #WRITES
 @app.route('/api/staff/<int:staff_id>', methods=['POST']) #POST
