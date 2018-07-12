@@ -1,12 +1,12 @@
-from app import app, triggers, db
+from backend import app, triggers, db
 from flask import jsonify
 import pandas as pd, json
-from app.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
+from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World! Visit github.com/funkybase/workload for instructions to use API"
+    return "Hello, World! Visit github.com/funkybase/workload-management-system for instructions to use API"
 
 #READS
 @app.route('/api/stafftotals', methods=['GET']) #GET
