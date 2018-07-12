@@ -1,10 +1,16 @@
 ### Workload API
-===
+---
+
+#### Local instance
 
 To access workload API locally, either:
     1. export FLASK_APP and run with `flask run`
     2. run with `python backend.py` (python must be version 3)
     3. run with `gunicorn wsgi`
+
+---
+
+#### API calls
 
 Once application is running, access the application via a browser and append the `/api` extension then continue below.
 
