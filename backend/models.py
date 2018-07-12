@@ -1,5 +1,8 @@
 from backend import db
 from sqlalchemy import inspect
+import datetime
+
+now = datetime.datetime.now()
 
 pattern_activity = db.Table('pattern_activity',
         db.Column('pattern_id', db.Integer, db.ForeignKey('pattern.id'), primary_key=True),
@@ -79,3 +82,7 @@ class Offering(db.Model):
     pattern_id = db.Column(db.Integer, db.ForeignKey('pattern.id'), nullable=False)
     staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     period_id = db.Column(db.Integer, db.ForeignKey('period.id'), nullable=False)
+    #year = db.Column(db.Integer, default=now.year, nullable=False)
+    def toDict(self):
+        return { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
+

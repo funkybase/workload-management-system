@@ -12,16 +12,19 @@ def index():
 @app.route('/api/stafftotals', methods=['GET']) #GET
 def stafftotals(): #5 second read time, try to automap sqlalchemy
     df = pd.read_sql('staff_totals', db.engine)
+    #change this to return a response object 
     return df.to_json(orient='records')
 
 @app.route('/api/offering', methods=['GET']) #GET
 def offerings(): #5 second read time, try to automap sqlalchemy
     df = pd.read_sql('offering_full', db.engine) 
+    #change this to return a response object 
     return df.to_json(orient='records')
 
 @app.route('/api/pattern', methods=['GET']) #GET
 def patterns(): #5 second read time, try to automap sqlalchemy
     df = pd.read_sql('pattern_full', db.engine)
+    #change this to return a response object 
     return df.to_json(orient='records')
 
 @app.route('/api/activitylookup/<int:pattern_id>', methods=['GET']) #GET
@@ -77,7 +80,12 @@ def activities():
 
 @app.route('/api/offeringlookup/<staff_id>', methods=['GET'])
 def offering_lookup(staff_id):
-    return 0
+    staff = Staff.query.get(staff_id)
+    offerings = staff.offerings
+    offeringArr = []
+    for offering in offerings:
+        offeringArr.append(offering.toDict())
+    return jsonify(offeringArr)
 
 @app.route('/api/costing', methods=['GET'])
 def costing():
