@@ -38,7 +38,7 @@ class Trigger:
         df7 = df4[df4.type == 'ps']
         df5 = df5.groupby(['pattern_id']).sum()
         df6 = df6.groupby(['pattern_id']).sum()
-        df7 = df7.groupby('pattern_id']).sum()
+        df7 = df7.groupby(['pattern_id']).sum()
         df1 = pd.merge(df1, df5, left_on='id', right_on='pattern_id', how='left')
         df1 = pd.merge(df1, df6, left_on='id', right_on='pattern_id', how='left')
         df1 = pd.merge(df1, df7, left_on='id', right_on='pattern_id', how='left')

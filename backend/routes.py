@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import jsonify, Response
+from flask import jsonify, Response, request, abort
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
@@ -49,8 +49,8 @@ def units():
         unitArr.append(unit.toDict())
     return jsonify(unitArr)
 
-@app.route('/api/periodlookup/<int:location_id>', methods=['GET']) #GET
-def period_lookup(location_id):
+@app.route('/api/periodoptions/<int:location_id>', methods=['GET']) #GET
+def period_options(location_id):
     location = Location.query.get(location_id)
     periods = location.period
     periodArr = []
@@ -82,7 +82,7 @@ def activities():
         activityArr.append(activity.toDict())
     return jsonify(activityArr)
 
-@app.route('/api/offeringlookup/<staff_id>', methods=['GET'])
+@app.route('/api/offeringlookup/<int:staff_id>', methods=['GET'])
 def offering_lookup(staff_id):
     staff = Staff.query.get(staff_id)
     offerings = staff.offerings
@@ -96,14 +96,66 @@ def costing():
     resp = Response(Trigger.costing(), mimetype='application/json')
     return resp
 
+@app.route('/api/unitlookup/<int:unit_id>', methods=['GET'])
+def unit_lookup(unit_id):
+    unit = Unit.query.get(unit_id)
+    return jsonify(unit.toDict())
+
+@app.route('/api/periodlookup/<int:period_id>', methods=['GET'])
+def period_lookup(period_id):
+    period = Period.query.get(period_id)
+    return jsonify(period.toDict())
+
+@app.route('/api/locationlookup/<int:location_id>', methods=['GET'])
+def location_lookup(location_id):
+    location = Location.query.get(location_id)
+    return jsonify(location.toDict())
+
 #WRITES
 @app.route('/api/staff/<int:staff_id>', methods=['POST']) #POST
 def edit_staff(staff_id):
-    return 0
+    if request.data and bool(request.json):
+        content = request.json
+        staff = Staff.query.get(staff_id)
+        if "fraction" in content:
+            staff.fraction = content["fraction"]
+        if "supervision" in content:
+            staff.supervision = content["supervision"]
+        if "research" in content:
+            staff.research = content["research"]
+        if "service" in content:
+            staff.service = content["service"]
+        if "extra" in content:
+            staff.extra = content["extra"]
+        if "service_description" in content:
+            staff.service_description = content["service_description"]
+        if "comments" in content:
+            staff.comments = content["comments"]
+        db.session.commit()
+        Trigger.totals()
+        return '', 201
+    return abort(404)
 
 @app.route('/api/offering/<int:offering_id>', methods=['POST']) #POST
 def edit_offering(offering_id):
-    return 0
+    if request.data and bool(request.json):
+        content = request.json
+        offering = Offering.query.get(offering_id)
+        if "confirm" in content:
+            offering.confirm = content["confirm"]
+        if "enrolment" in content:
+            offering.enrolment = content["enrolment"]
+        if "tutorial_to_staff" in content:
+            content.tutorial_to_staff = content["content_to_staff"]
+        if "tutorial_to_casual" in content:
+            content.tutorial_to_casual = content["tutorial_to_casual"]
+        if "staff_id" in content:
+            content.UC = Staff.query.get(content["staff_id"])
+        db.session.commit()
+        Trigger.offering()
+        Trigger.totals()
+        return '', 201
+    return abort(404)
 
 @app.route('/api/new/offering', methods=['POST']) #POST
 def new_offering():
