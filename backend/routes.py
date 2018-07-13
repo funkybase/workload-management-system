@@ -154,7 +154,7 @@ def edit_offering(offering_id):
         if "enrolment" in content:
             offering.enrolment = content["enrolment"]
         if "tutorial_to_staff" in content:
-            offering.tutorial_to_staff = content["content_to_staff"]
+            offering.tutorial_to_staff = content["tutorial_to_staff"]
         if "tutorial_to_casual" in content:
             offering.tutorial_to_casual = content["tutorial_to_casual"]
         if "staff_id" in content:
