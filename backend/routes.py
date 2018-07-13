@@ -49,6 +49,14 @@ def units():
         unitArr.append(unit.toDict())
     return jsonify(unitArr)
 
+@app.route('/api/period', methods=['GET'])
+def periods():
+    periods = Period.query.all()
+    periodArr = []
+    for period in periods:
+        periodArr.append(period.toDict())
+    return jsonify(periodArr)
+
 @app.route('/api/periodoptions/<int:location_id>', methods=['GET']) #GET
 def period_options(location_id):
     location = Location.query.get(location_id)
