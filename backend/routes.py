@@ -126,7 +126,7 @@ def edit_staff(staff_id):
     if request.data and bool(request.json):
         content = request.json
         #replace with function single_update_staff
-        job = q.enqueue.call(
+        job = q.enqueue_call(
                 func=single_update_staff, args=(content, staff_id), result_ttl=5000
         )
         return job.get_id(), 200
@@ -135,8 +135,6 @@ def edit_staff(staff_id):
 @app.route('/api/offering/<int:offering_id>', methods=['POST']) #POST
 def edit_offering(offering_id):
     #update cache (redis) and then make a task queue to update postgres
-    print("successfully reached checkpoint 1")
-    print(request.get_json(silent=True))
     if request.data and bool(request.json):
         content = request.json
         # offering = Offering.query.get(offering_id)
@@ -153,8 +151,7 @@ def edit_offering(offering_id):
         # db.session.commit()
         # Trigger.offering()
         # Trigger.totals()
-        print('successfully reached here checkpoint 2')
-        job = q.enqueue.call(
+        job = q.enqueue_call(
                 func=single_update_offering, args=(content, offering_id), result_ttl=5000
         )
         return job.get_id(), 200
@@ -184,7 +181,7 @@ def new_offering():
             # db.session.commit()
             # Trigger.offering()
             # Trigger.totals()
-            job = q.enqueue.call(
+            job = q.enqueue_call(
                     func=single_insert_offering, args=(content), result_ttl=5000
             )
             return job.get_id(), 200
@@ -214,7 +211,7 @@ def new_pattern():
                 # pattern.hour_per_tutorial = content["hour_per_tutorial"]
             # db.session.commit()
             # Trigger.pattern()
-            job = q.enqueue.call(
+            job = q.enqueue_call(
                     func=single_insert_pattern, args=(content), result_ttl=5000
             )
             return job.get_id(), 200
@@ -239,7 +236,7 @@ def update_offering():
         # db.session.commit()
         # Trigger.offering()
         # Trigger.totals()
-        job = q.enqueue.call(
+        job = q.enqueue_call(
                 func=bulk_update_offering, args=(content), result_ttl=5000
         )
         return job.get_id(), 200
@@ -267,7 +264,7 @@ def update_staff():
                 # staff.comments = key["comments"]
         # db.session.commit()
         # Trigger.totals()
-        job = q.enqueue.call(
+        job = q.enqueue_call(
                 func=bulk_update_staff, args=(content), result_ttl=5000
         )
         return job.get_id(), 200
