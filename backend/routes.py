@@ -1,6 +1,6 @@
 from backend import app, db, q
 from flask import jsonify, Response, request, abort
-import pandas as pd, json
+import pandas as pd, json, logging
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
 
@@ -151,6 +151,7 @@ def edit_offering(offering_id):
         # db.session.commit()
         # Trigger.offering()
         # Trigger.totals()
+        app.logger.info('successfully reached here')
         job = q.enqueue.call(
                 func=single_update_offering, args=(content, offering_id), result_ttl=5000
         )
