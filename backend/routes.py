@@ -135,6 +135,7 @@ def edit_staff(staff_id):
 @app.route('/api/offering/<int:offering_id>', methods=['POST']) #POST
 def edit_offering(offering_id):
     #update cache (redis) and then make a task queue to update postgres
+    app.logger.info('successfully reached checkpoint 1')
     if request.data and bool(request.json):
         content = request.json
         # offering = Offering.query.get(offering_id)
@@ -151,7 +152,7 @@ def edit_offering(offering_id):
         # db.session.commit()
         # Trigger.offering()
         # Trigger.totals()
-        app.logger.info('successfully reached here')
+        app.logger.info('successfully reached here checkpoint 2')
         job = q.enqueue.call(
                 func=single_update_offering, args=(content, offering_id), result_ttl=5000
         )
