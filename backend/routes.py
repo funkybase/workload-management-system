@@ -1,4 +1,4 @@
-from backend import app, db
+from backend import app, db, q
 from flask import jsonify, Response, request, abort
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
