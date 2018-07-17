@@ -3,6 +3,7 @@ from flask import jsonify, Response, request, abort
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
+from backend.worker import conn
 from rq.job import Job
 
 @app.route('/')
