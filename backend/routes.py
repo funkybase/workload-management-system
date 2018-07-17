@@ -136,7 +136,7 @@ def edit_staff(staff_id):
 def edit_offering(offering_id):
     #update cache (redis) and then make a task queue to update postgres
     print("successfully reached checkpoint 1")
-    print(bool(request.json) == True)
+    print(request.json)
     if request.data and bool(request.json):
         content = request.json
         # offering = Offering.query.get(offering_id)
