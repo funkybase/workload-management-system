@@ -1,6 +1,6 @@
 from backend import app, db, q
 from flask import jsonify, Response, request, abort
-import pandas as pd, json, logging
+import pandas as pd, json, logging, sys
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
 
@@ -135,6 +135,8 @@ def edit_staff(staff_id):
 @app.route('/api/offering/<int:offering_id>', methods=['POST']) #POST
 def edit_offering(offering_id):
     #update cache (redis) and then make a task queue to update postgres
+    app.logger.addHandler(logging.StreamHandler(sys.stdout))
+    app.logger.setLevel(logging.ERROR)
     app.logger.info('successfully reached checkpoint 1')
     if request.data and bool(request.json):
         content = request.json
