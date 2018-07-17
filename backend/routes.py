@@ -3,6 +3,7 @@ from flask import jsonify, Response, request, abort
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
+from rq.job import Job
 
 @app.route('/')
 @app.route('/index')
@@ -270,7 +271,7 @@ def update_staff():
         return job.get_id(), 200
     return abort(404)
 
-@app.route("/results/<job_key>", methods=['GET'])
+@app.route("/api/results/<job_key>", methods=['GET'])
 def get_result(job_key):
     job = Job.fetch(job_key, connection=conn)
     if job.is_finished:
