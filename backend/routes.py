@@ -127,7 +127,6 @@ def edit_staff(staff_id):
     #update cache (redis) and then make a task queue to update postgres
     if request.data and bool(request.json):
         content = request.json
-        #replace with function single_update_staff
         job = q.enqueue_call(
                 func=single_update_staff, args=(content, staff_id), result_ttl=5000
         )
@@ -139,20 +138,6 @@ def edit_offering(offering_id):
     #update cache (redis) and then make a task queue to update postgres
     if request.data and bool(request.json):
         content = request.json
-        # offering = Offering.query.get(offering_id)
-        # if "confirm" in content:
-            # offering.confirm = content["confirm"]
-        # if "enrolment" in content:
-            # offering.enrolment = content["enrolment"]
-        # if "tutorial_to_staff" in content:
-            # offering.tutorial_to_staff = content["content_to_staff"]
-        # if "tutorial_to_casual" in content:
-            # offering.tutorial_to_casual = content["tutorial_to_casual"]
-        # if "staff_id" in content:
-            # offering.UC = Staff.query.get(content["staff_id"])
-        # db.session.commit()
-        # Trigger.offering()
-        # Trigger.totals()
         job = q.enqueue_call(
                 func=single_update_offering, args=(content, offering_id), result_ttl=5000
         )
@@ -165,24 +150,6 @@ def new_offering():
     if request.data and bool(request.json):
         content = request.json
         if ("unit_id" and "period_id" and "pattern_id") in content:
-            # offering = Offering()
-            # with db.session.no_autoflush:
-                # offering.unit = Unit.query.get(content["unit_id"])
-                # pattern = Pattern.query.get(content["pattern_id"])
-                # period = Period.query.get(content["period_id"])
-                # offering.period = period
-                # offering.pattern = pattern
-            # if "confirm" in content:
-                # offering.confirm = content["confirm"]
-            # if "enrolment" in content:
-                # offering.enrolment = content["enrolment"]
-            # if "tutorial_to_staff" in content:
-                # offering.tutorial_to_staff = content["tutorial_to_staff"]
-            # if "tutorial_to_casual" in content:
-                # offering.tutorial_to_casual = content["tutorial_to_casual"]
-            # db.session.commit()
-            # Trigger.offering()
-            # Trigger.totals()
             job = q.enqueue_call(
                     func=single_insert_offering, args=(content), result_ttl=5000
             )
@@ -196,23 +163,6 @@ def new_pattern():
     if request.data and bool(request.json):
         content = request.json
         if ("code" and "location_id" and "activities" and "mode") in content:
-            # location = Location.query.get(content["location_id"])
-            # pattern = Pattern(code=content["code"], mode=content["mode"])
-            # pattern.location = location
-            # activities = content["activities"]
-            # for activity in activities:
-                # act = Activity.query.get(activity["activity_id"])
-                # pattern.pattern_activity.append(act)
-            # if "description" in content:
-                # pattern.description = content["description"]
-            # if "long_description" in content:
-                # pattern.long_description = content["long_description"]
-            # if "student_per_group" in content:
-                # pattern.student_per_group = content["student_per_group"]
-            # if "hour_per_tutorial" in content:
-                # pattern.hour_per_tutorial = content["hour_per_tutorial"]
-            # db.session.commit()
-            # Trigger.pattern()
             job = q.enqueue_call(
                     func=single_insert_pattern, args=(content), result_ttl=5000
             )
@@ -223,21 +173,6 @@ def new_pattern():
 def update_offering():
     if request.data and bool(request.json):
         content = request.json
-        # for key in content:
-            # offering = Offering.query.get(key)
-            # if "confirm" in key:
-                # offering.confirm = key["confirm"]
-            # if "enrolment" in key:
-                # offering.enrolment = key["enrolment"]
-            # if "tutorial_to_staff" in key:
-                # offering.tutorial_to_staff = key["content_to_staff"]
-            # if "tutorial_to_casual" in key:
-                # offering.tutorial_to_casual = key["tutorial_to_casual"]
-            # if "staff_id" in key:
-                # offering.UC = Staff.query.get(key["staff_id"])
-        # db.session.commit()
-        # Trigger.offering()
-        # Trigger.totals()
         job = q.enqueue_call(
                 func=bulk_update_offering, args=(content), result_ttl=5000
         )
@@ -248,24 +183,6 @@ def update_offering():
 def update_staff():
     if request.data and bool(request.json):
         content = request.json
-        # for key in content:
-            # staff = Staff.query.get(key)
-            # if "fraction" in key:
-                # staff.fraction = key["fraction"]
-            # if "supervision" in key:
-                # staff.supervision = key["supervision"]
-            # if "research" in key:
-                # staff.research = key["research"]
-            # if "service" in key:
-                # staff.service = key["service"]
-            # if "extra" in key:
-                # staff.extra = key["extra"]
-            # if "service_description" in key:
-                # staff.service_description = key["service_description"]
-            # if "comments" in key:
-                # staff.comments = key["comments"]
-        # db.session.commit()
-        # Trigger.totals()
         job = q.enqueue_call(
                 func=bulk_update_staff, args=(content), result_ttl=5000
         )
