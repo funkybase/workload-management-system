@@ -195,7 +195,7 @@ def get_result(job_key):
     if job.is_finished:
         return str(job.result), 200
     else:
-        return "Nay!", 202
+        return "Saving!", 202
 
 def single_update_staff(content, id):
     staff = Staff.query.get(id)

@@ -94,3 +94,34 @@ To add new pattern, append `/new/pattern` and post the json in the format:
 
 The last four methods do not allow bulk inserts.
 
+To edit multiple staffs, append `update/staff` and post the json in the format:
+```
+{  
+<staff_id> : {  
+	"fraction":  
+	...  
+	},   
+2 : {  
+//this is staff id 2  
+	"fraction":  
+	...  
+	}  
+} 
+```
+
+To edit multiple offerings, append `update/offering` and post the json in the format:
+```
+{  
+<offering_id>: {  
+	"confirm":  
+	...  
+	}.  
+3 : {  
+//this is offering id 3   
+	"confirm":  
+	...  
+	}  
+}   
+```
+
+To view the status of longer computational jobs, append `results/<job_key>`. (job key is given after any update and edit as a result. statuses include saving and saved.) 
