@@ -163,7 +163,6 @@ def new_pattern():
     #update cache (redis) and then make a task queue to update postgres
     if request.data and bool(request.json):
         content = request.json
-        print(content)
         if ("code" and "location_id" and "activities" and "mode") in content:
             job = q.enqueue_call(
                     func=single_insert_pattern, args=(content,), result_ttl=5000
@@ -195,7 +194,8 @@ def update_staff():
 def get_result(job_key):
     job = Job.fetch(job_key, connection=r)
     if job.is_finished:
-        return json.dumps(job.result), 200
+        resp = Response(json.dumps(job.result), mimetype='application/json', status=200) 
+        return resp 
     else:
         return jsonify(
                 status = "Saving"
