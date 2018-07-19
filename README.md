@@ -30,7 +30,9 @@ To view locations, append `/location`.
 
 To view activities of a certain pattern, append `/activitylookup/{pattern_id}`. (pattern_id is a unique key integer)
 
-To view periods of a certain location, append `/periodlookup/{location_id}`. (location_id is a unique key integer)
+To view periods by id, append `/periodlookup/{period_id}`. (period_id is a unique key integer)  
+
+To view periods of a certain location, append `periodoptions/{location_id}`. (location_id is a unique key integer)  
 
 To view offerings of a certain staff, append `/offeringlookup/{staff_id}`. (staff_id is a unique key integer)
 
@@ -38,7 +40,8 @@ To view total costs and total casual hours, append `/costing`.
 
 To edit staff, append `staff/{staff_id}` and post the json in the format:  
 ```
-{"fraction":<some float max 1>,  
+{  
+	"fraction":<some float max 1>,  
 	"supervision":<some float>,  
 	 "research":<some float>,  
 	 "service":<some float>,  
@@ -50,7 +53,8 @@ To edit staff, append `staff/{staff_id}` and post the json in the format:
 
 To edit offering, append `offering/{offering_id}` and post the json in the format:  
 ```
-{"confirm":<some boolean>,  
+{  
+	"confirm":<some boolean>,  
 	"enrolment":<some integer>,  
 	"tutorial_to_staff":<some integer>,  
 	"tutorial_to_casual":<some integer>,  
@@ -62,7 +66,8 @@ To edit offering, append `offering/{offering_id}` and post the json in the forma
 To add new offering, append `/new/offering` and post the json in the format:  
 ```  
 //mandatory fields  
-{"unit_id":<some int>,  
+{  
+	"unit_id":<some int>,  
 	"pattern_id":<some int>,  
 	"period_id":<some int>   
 //optional fields (these fields have either have default values or nullable)  
@@ -76,7 +81,8 @@ To add new offering, append `/new/offering` and post the json in the format:
 To add new pattern, append `/new/pattern` and post the json in the format:  
 ```  
 //mandatory fields  
-{"code":<some unique string max 8 char>,  
+{  
+	"code":<some unique string max 8 char>,  
 	"location_id":<some int>,  
 	"mode":<some char 'D' or 'X'>,  
 	"activities: [{  
@@ -97,29 +103,29 @@ The last four methods do not allow bulk inserts.
 To edit multiple staffs, append `update/staff` and post the json in the format:
 ```
 {  
-<staff_id> : {  
-	"fraction":  
-	...  
-	},   
-2 : {  
-//this is staff id 2  
-	"fraction":  
-	...  
-	}  
+	<staff_id> : {  
+		"fraction":  
+		...  
+		},   
+	2 : {  
+	//this is staff id 2  
+		"fraction":  
+		...  
+		}  
 } 
 ```
 
 To edit multiple offerings, append `update/offering` and post the json in the format:
 ```
 {  
-<offering_id>: {  
-	"confirm":  
-	...  
-	}.  
-3 : {  
-//this is offering id 3   
-	"confirm":  
-	...  
+	<offering_id>: {  
+		"confirm":  
+		...  
+		},  
+	3 : {  
+	//this is offering id 3   
+		"confirm":  
+		...  
 	}  
 }   
 ```
