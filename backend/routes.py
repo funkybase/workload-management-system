@@ -1,10 +1,11 @@
-from backend import app, db, q
+from backend import app, db, q, r
 from flask import jsonify, Response, request, abort
 import pandas as pd, json
 from backend.models import Pattern, Unit, Staff, Location, Offering, Activity, Period
 from backend.triggers import Trigger
-from backend.worker import conn
+#from backend.worker import conn
 from rq.job import Job
+
 
 @app.route('/')
 @app.route('/index')
@@ -192,11 +193,13 @@ def update_staff():
 
 @app.route("/api/results/<job_key>", methods=['GET'])
 def get_result(job_key):
-    job = Job.fetch(job_key, connection=conn)
+    job = Job.fetch(job_key, connection=r)
     if job.is_finished:
-        return str(job.result), 200
+        return json.dumps(job.result), 200
     else:
-        return "Saving!", 202
+        return jsonify(
+                status = "Saving"
+                ), 202
 
 def single_update_staff(content, id):
     staff = Staff.query.get(id)
