@@ -151,7 +151,7 @@ def new_offering():
         content = request.json
         if ("unit_id" and "period_id" and "pattern_id") in content:
             job = q.enqueue_call(
-                    func=single_insert_offering, args=(content), result_ttl=5000
+                    func=single_insert_offering, args=(content,), result_ttl=5000
             )
             return job.get_id(), 200
     return abort(404)
@@ -165,7 +165,7 @@ def new_pattern():
         print(content)
         if ("code" and "location_id" and "activities" and "mode") in content:
             job = q.enqueue_call(
-                    func=single_insert_pattern, args=(content), result_ttl=5000
+                    func=single_insert_pattern, args=(content,), result_ttl=5000
             )
             return job.get_id(), 200
     return abort(404)
@@ -175,7 +175,7 @@ def update_offering():
     if request.data and bool(request.json):
         content = request.json
         job = q.enqueue_call(
-                func=bulk_update_offering, args=(content), result_ttl=5000
+                func=bulk_update_offering, args=(content,), result_ttl=5000
         )
         return job.get_id(), 200
     return abort(404)
@@ -185,7 +185,7 @@ def update_staff():
     if request.data and bool(request.json):
         content = request.json
         job = q.enqueue_call(
-                func=bulk_update_staff, args=(content), result_ttl=5000
+                func=bulk_update_staff, args=(content,), result_ttl=5000
         )
         return job.get_id(), 200
     return abort(404)
