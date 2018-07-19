@@ -222,7 +222,7 @@ def single_update_staff(content, id):
         Trigger.totals()
         return {"status": "Saved"}
     except:
-        errors.append("Unable to edit item to database.")
+        errors.append("Unable to edit staff to database.")
         return {"error": errors}
 
 def single_update_offering(content, id):
@@ -243,7 +243,7 @@ def single_update_offering(content, id):
         Trigger.totals()
         return {"status": "Saved"}
     except:
-        errors.append("Unable to edit item to database.")
+        errors.append("Unable to edit offering to database.")
         return {"error": errors}
 
 def single_insert_offering(content):
@@ -268,7 +268,7 @@ def single_insert_offering(content):
         Trigger.totals()
         return {"status": "Saved"}
     except:
-        errors.append("Unable to insert new item to database.")
+        errors.append("Unable to insert new offering to database.")
         return {"error": errors}
 
 def single_insert_pattern(content):
@@ -292,7 +292,7 @@ def single_insert_pattern(content):
         Trigger.pattern()
         return {"status": "Saved"}
     except:
-        errors.append("Unable to insert new item to database.")
+        errors.append("Unable to insert new pattern to database.")
         return {"error": errors}
 
 def bulk_update_offering(content):
@@ -314,7 +314,7 @@ def bulk_update_offering(content):
         Trigger.totals()
         return {"status": "Saved"}
     except:
-        errors.append("Unable to update new items to database.")
+        errors.append("Unable to update offerings to database.")
         return {"error": errors}
 
 def bulk_update_staff(content):
@@ -339,5 +339,5 @@ def bulk_update_staff(content):
         Trigger.totals()
         return {"status": "Saved"}
     except:
-        errors.append("Unable to update new items to database.")
+        errors.append("Unable to update staffs to database.")
         return {"error": errors}
